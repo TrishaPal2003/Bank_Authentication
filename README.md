@@ -283,22 +283,10 @@ The project uses the following Python libraries:
 - scikit-learn
 - jupyter
 
-**Project Notebook:** [Banknote_Authentication.ipynb](Banknote_Authentication.ipynb)
+**Project Notebook:** [Banknote_Authentication.ipynb]([Banknote_Authentication.ipynb](https://colab.research.google.com/drive/1XhC9fwQvvdz-DXcCsLoddyANmDYRrh2-?usp=sharing))
 
-## 13. References
-
-[1] UCI Machine Learning Repository, "Banknote Authentication Dataset." Available: https://archive.ics.uci.edu/dataset/267/banknote+authentication
-
-[2] Scikit-learn Developers, "Scikit-learn: Machine Learning in Python." Available: https://scikit-learn.org/
-
-[3] Scikit-learn Developers, "KNeighborsClassifier Documentation." Available: https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
-
-[4] Scikit-learn Developers, "SVC Documentation." Available: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
-
-[5] Scikit-learn Developers, "Pipeline Documentation." Available: https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
 
 ---
 
 **Project Repository:** [Bank_Authentication](https://github.com/TrishaPal2003/Bank_Authentication)
 
-**Notebook:** [Banknote_Authentication.ipynb](https://github.com/TrishaPal2003/Bank_Authentication/blob/main/Banknote_Authentication.ipynb)
