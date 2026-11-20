@@ -1,70 +1,59 @@
+
 # Banknote Authentication Using Machine Learning
 
-A binary classification project that compares **K-Nearest Neighbors (KNN)** and **Support Vector Machine (SVM)** to classify banknotes using statistical features extracted from wavelet-transformed images.
+A binary classification project comparing **K-Nearest Neighbors (KNN)** and **Support Vector Machine (SVM)** for banknote authentication. The models classify banknotes using four statistical features extracted from wavelet-transformed images.
 
-The project focuses on data exploration, preprocessing, duplicate-record analysis, model implementation, performance evaluation, cross-validation, and overfitting analysis.
+The project includes data exploration, preprocessing, duplicate-record analysis, model training, evaluation, cross-validation, and a basic overfitting analysis.
 
 ---
 
 ## Project Overview
 
-Banknote authentication is a classification problem in which the objective is to distinguish between two classes of banknotes using measurable statistical characteristics.
+Banknote authentication is a binary classification task that aims to distinguish between two classes of banknotes based on measurable statistical characteristics.
 
-In this project, two supervised Machine Learning algorithms are implemented:
+This project implements two supervised Machine Learning algorithms:
 
 - **K-Nearest Neighbors (KNN)**
 - **Support Vector Machine (SVM)**
 
-Both models are trained and evaluated using the Banknote Authentication dataset. Their performance is compared using accuracy, precision, recall, F1-score, confusion matrices, and 5-fold Stratified Cross-Validation.
-
-The project also investigates the effect of duplicate records on classification performance.
+The models are compared using test accuracy, classification reports, confusion matrices, training accuracy, and 5-fold Stratified Cross-Validation.
 
 ## Objectives
 
 - Explore and understand the Banknote Authentication dataset.
 - Perform Exploratory Data Analysis (EDA).
-- Identify missing values and duplicate records.
-- Understand feature distributions and correlations.
-- Apply feature scaling using StandardScaler.
-- Implement KNN and SVM classification algorithms.
-- Evaluate model performance using multiple evaluation metrics.
-- Investigate the effect of removing duplicate records.
-- Perform 5-fold Stratified Cross-Validation on training data.
-- Analyze potential overfitting using training accuracy and cross-validation results.
+- Check missing values, class distribution, and duplicate records.
+- Examine feature distributions and correlations.
+- Apply feature scaling using `StandardScaler`.
+- Implement KNN and SVM classification.
+- Evaluate models using multiple metrics.
+- Investigate how duplicate records relate to model evaluation.
+- Compare training accuracy and cross-validation performance.
 
-## Dataset Description
+## Dataset
 
-The project uses the `data_banknote_authentication.csv` dataset.
-
-**Dataset information:**
+The project uses the **Banknote Authentication dataset** from the UCI Machine Learning Repository.
 
 | Property | Value |
-|---|---:|
+|:---:|:---:|
 | Total records | 1,372 |
 | Input features | 4 |
 | Target variable | 1 |
 | Missing values | 0 |
 | Exact duplicate rows | 24 |
-| Unique records after deduplication | 1,348 |
+| Records after deduplication | 1,348 |
 
 ### Features
 
-The dataset contains four numerical features extracted from wavelet-transformed banknote images.
-
 | Feature | Description |
-|---|---|
+|:---:|:---:|
 | Variance | Variance of the wavelet-transformed image |
 | Skewness | Skewness of the wavelet-transformed image |
-| Curtosis | Curtosis of the wavelet-transformed image |
+| Curtosis | Kurtosis of the wavelet-transformed image |
 | Entropy | Entropy of the wavelet-transformed image |
-| Class | Target classification label |
+| Class | Target label |
 
-**Target variable:**
-
-- `0`: Class 0
-- `1`: Class 1
-
-The exact mapping of these encoded labels to genuine and forged banknotes should be verified against the dataset documentation.
+The target labels are `0` and `1`. Their mapping to genuine and forged banknotes should be interpreted according to the dataset documentation.
 
 **Dataset source:** [UCI Machine Learning Repository – Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)
 
@@ -83,217 +72,168 @@ The exact mapping of these encoded labels to genuine and forged banknotes should
 ### 1. Data Loading and Inspection
 
 - Load the CSV dataset using Pandas.
-- Inspect the first few records.
-- Examine dataset dimensions and data types.
-- Check missing values.
-- Identify duplicate records.
-- Analyze class distribution.
+- Inspect sample records, dimensions, and data types.
+- Check missing values and duplicate records.
+- Examine class distribution.
 - Generate descriptive statistics.
 
 ### 2. Exploratory Data Analysis (EDA)
 
-Several visualization techniques are used to understand the dataset:
+The notebook explores the dataset using:
 
 - Count plot for class distribution.
 - Histograms for feature distributions.
-- Correlation heatmap to examine relationships between features.
-- Box plots to investigate feature spread and potential outliers.
+- Correlation heatmap for feature relationships.
+- Box plots to examine spread and potential outliers.
 
-### 3. Data Preprocessing
+### 3. Duplicate Record Analysis
 
-The dataset is divided into:
+The dataset contained **24 exact duplicate rows**.
 
-- **Features (X):** Four numerical input variables.
-- **Target (y):** Classification label.
+| Description | Count |
+|:---:|:---:|
+| Original records | 1,372 |
+| Duplicate rows removed | 24 |
+| Records after deduplication | 1,348 |
+| Conflicting feature vectors with different labels | 0 |
 
-An 80:20 train-test split is performed with stratification.
+The duplicate records were removed before the cleaned-data experiment.
 
-`random_state=42` is used to maintain reproducibility.
+### 4. Data Preprocessing
 
-### 4. Duplicate Record Analysis
+- **Features (X):** Four numerical input features.
+- **Target (y):** Binary class label.
+- Train-test split: **80:20**.
+- Stratification was used to preserve class proportions.
+- `random_state=42` was used for reproducibility.
 
-A total of 24 exact duplicate rows were identified.
-
-The duplicate records were removed before conducting the additional experiment.
-
-Results:
-
-- Original dataset: 1,372 records.
-- Duplicate records removed: 24.
-- Deduplicated dataset: 1,348 records.
-- Conflicting feature vectors with different labels: 0.
-
-Both models were evaluated using the deduplicated dataset to investigate classification performance after duplicate removal.
+After deduplication, the split contains 1,078 training samples and 270 test samples.
 
 ### 5. Feature Scaling
 
-StandardScaler is applied because KNN and RBF-based SVM are sensitive to differences in feature scales.
+`StandardScaler` is applied because KNN and RBF-based SVM are sensitive to differences in feature scales.
 
-A Scikit-learn Pipeline is used to ensure that:
-
-- The scaler is fitted only on training data.
-- Training data is transformed using the fitted scaler.
-- Testing data is transformed using the same fitted scaler.
-- During cross-validation, scaling is fitted independently within each training fold.
-
-This helps prevent preprocessing leakage between training and validation data.
+Scaling is included inside Scikit-learn Pipelines so the scaler is fitted during model training and the same fitted transformation is applied to test data.
 
 ### 6. Model Implementation
 
 **K-Nearest Neighbors (KNN)**
 
-- Algorithm: K-Nearest Neighbors
-- Number of neighbors: 5
-- Classification method: Distance-based classification
-- Feature scaling: StandardScaler
+- `n_neighbors=5`
+- Distance-based classification
+- `StandardScaler` preprocessing
 
 **Support Vector Machine (SVM)**
 
-- Algorithm: Support Vector Machine
-- Kernel: RBF (Radial Basis Function)
-- Feature scaling: StandardScaler
-- Parameters: Default Scikit-learn SVC parameters
+- RBF (Radial Basis Function) kernel
+- Default Scikit-learn `SVC` parameters
+- `StandardScaler` preprocessing
 
-No systematic hyperparameter tuning was performed. Both algorithms were implemented using fixed baseline configurations.
+No systematic hyperparameter tuning was performed. These are baseline model configurations.
 
 ### 7. Model Evaluation
 
-Both models are evaluated using:
+The models are evaluated using:
 
 - Accuracy
 - Precision
 - Recall
 - F1-score
-- Classification Report
-- Confusion Matrix
+- Classification report
+- Confusion matrix
 
 ### 8. Cross-Validation
 
-To evaluate model consistency, 5-fold Stratified Cross-Validation is performed using only the training dataset.
-
-The following configuration is used:
+The notebook uses 5-fold Stratified Cross-Validation with:
 
 - Number of folds: 5
-- Shuffling: Enabled
-- Random state: 42
-- Evaluation metric: Accuracy
+- Shuffling: enabled
+- `random_state=42`
+- Scoring metric: accuracy
 
-The complete preprocessing and classification pipeline is evaluated independently within each fold.
-
-The test dataset is kept separate from the cross-validation process and is used only for final model evaluation.
-
-The following measurements are recorded:
-
-- Accuracy for each fold.
-- Mean accuracy.
-- Standard deviation.
+**Important methodological note:** In the current notebook, the cross-validation call uses the complete deduplicated dataset (`features_clean`, `target_clean`), including the samples in the held-out test split. Therefore, these CV results should not be described as training-only cross-validation. For a strict final evaluation protocol, CV should be performed on the training split only, leaving the test set untouched until final evaluation.
 
 ### 9. Overfitting Analysis
 
-Training accuracy is compared with the mean cross-validation accuracy to investigate potential overfitting.
-
-A small difference between these measurements may indicate that the model performs consistently across the training folds.
-
-However, this comparison alone cannot establish that a model is free from overfitting or guarantee its performance on independent datasets.
+Training accuracy is compared with cross-validation accuracy as a basic check for potential overfitting. These metrics alone cannot prove that a model generalizes to all independent datasets.
 
 ---
 
 ## Experimental Results
 
-### Dataset After Duplicate Removal
+### Test-Set Performance (Deduplicated Dataset)
 
-| Property | Value |
-|---|---:|
-| Original records | 1,372 |
-| Duplicate records removed | 24 |
-| Final records | 1,348 |
-| Training samples | 1,078 |
-| Testing samples | 270 |
-
-### Test-Set Performance
-
-The following table should contain the final results obtained after rerunning the updated notebook.
+The cleaned dataset was split into 1,078 training samples and 270 test samples.
 
 | Model | Test Accuracy |
-|---|---:|
-| KNN | [Update with new result] |
-| SVM | [Update with new result] |
+|:---:|:---:|
+| KNN | 100.00% |
+| SVM | 99.63% |
 
-### Classification Performance
+### Confusion Matrices
 
-**KNN Confusion Matrix**
-
-| Actual / Predicted | Class 0 | Class 1 |
-|---|---:|---:|
-| Class 0 | [Update] | [Update] |
-| Class 1 | [Update] | [Update] |
-
-**SVM Confusion Matrix**
+**KNN**
 
 | Actual / Predicted | Class 0 | Class 1 |
-|---|---:|---:|
-| Class 0 | [Update] | [Update] |
-| Class 1 | [Update] | [Update] |
+|:---:|:---:|:---:|
+| Class 0 | 148 | 0 |
+| Class 1 | 0 | 122 |
 
-### 5-Fold Stratified Cross-Validation Results
+KNN correctly classified all 270 test samples.
 
-| Evaluation Metric | KNN | SVM |
-|---|---:|---:|
-| Mean Accuracy | 99.44% | 99.91% |
-| Standard Deviation | 0.347% | 0.185% |
+**SVM**
 
-**KNN Fold Scores:**
+| Actual / Predicted | Class 0 | Class 1 |
+|:---:|:---:|:---:|
+| Class 0 | 147 | 1 |
+| Class 1 | 0 | 122 |
 
-- Fold 1: 99.07%
-- Fold 2: 99.54%
-- Fold 3: 100.00%
-- Fold 4: 99.53%
-- Fold 5: 99.07%
+SVM correctly classified 269 of the 270 test samples.
 
-**SVM Fold Scores:**
+### 5-Fold Cross-Validation Results
 
-- Fold 1: 99.54%
-- Fold 2: 100.00%
-- Fold 3: 100.00%
+The following results are from the notebook's current cross-validation experiment on the full deduplicated dataset.
+
+| Metric | KNN | SVM |
+|:---:|:---:|:---:|
+| Mean Accuracy | 99.70% | 99.85% |
+| Standard Deviation | 0.277% | 0.181% |
+
+**KNN fold scores:**
+
+- Fold 1: 99.63%
+- Fold 2: 99.63%
+- Fold 3: 99.26%
 - Fold 4: 100.00%
 - Fold 5: 100.00%
 
-### Cross-Validation Analysis
+**SVM fold scores:**
 
-The cross-validation results indicate that both models achieved consistently high classification accuracy.
-
-- KNN achieved a mean accuracy of 99.44%.
-- SVM achieved a higher mean accuracy of 99.91%.
-- SVM demonstrated lower variability, with a standard deviation of 0.185%, compared to 0.347% for KNN.
-- SVM showed more consistent performance across the five validation folds.
-
-Based on these results, SVM demonstrated better cross-validation performance than KNN under the selected experimental configurations.
-
+- Fold 1: 99.63%
+- Fold 2: 100.00%
+- Fold 3: 99.63%
+- Fold 4: 100.00%
+- Fold 5: 100.00%
 
 ### Training Accuracy
 
 | Model | Training Accuracy |
-|---|---:|
-| KNN | [Update] |
-| SVM | [Update] |
+|:---:|:---:|
+| KNN | 99.81% |
+| SVM | 99.91% |
 
-### Model Comparison
+### Results Interpretation
 
-The final comparison is based on:
-
-- Test-set accuracy.
-- Mean cross-validation accuracy.
-- Cross-validation standard deviation.
-- Training accuracy.
-- Classification reports and confusion matrices.
-
-The model with the highest test accuracy is not automatically the best model in every situation. Consistency across validation folds and the balance between precision and recall should also be considered.
-
----
+- KNN achieved 100% accuracy on the deduplicated test set.
+- SVM achieved 99.63% test accuracy.
+- SVM had a slightly higher mean cross-validation accuracy in the current experiment.
+- SVM had slightly lower cross-validation variability.
+- The difference in test performance is only one sample, so it is too small to conclude that one model is universally superior.
+- These results are promising for this dataset but do not establish real-world performance on independent banknote data.
 
 ## Requirements
 
-The project requires the following Python libraries:
+The project uses these Python libraries:
 
 ```text
 pandas
@@ -306,14 +246,12 @@ jupyter
 
 ## Conclusion
 
-This project demonstrates the implementation and evaluation of two supervised Machine Learning algorithms for banknote authentication.
+This project demonstrates a machine learning workflow for binary banknote classification using KNN and RBF-kernel SVM. After removing 24 exact duplicate records, the cleaned dataset contained 1,348 records.
 
-The dataset was explored and preprocessed, and 24 exact duplicate records were removed before model training and evaluation.
+On the 270-sample test set, KNN achieved 100% accuracy and SVM achieved 99.63%. The current 5-fold cross-validation experiment also produced high mean accuracy for both models. However, because the notebook currently performs cross-validation on the full deduplicated dataset rather than only the training split, the CV results should be rerun using training data only before presenting them as an independent validation estimate.
 
-KNN and RBF-kernel SVM were implemented using StandardScaler and Scikit-learn Pipelines. Their performance was evaluated using a stratified train-test split and 5-fold Stratified Cross-Validation performed exclusively on the training dataset.
-
-The final experimental results provide a comparison of the two baseline classification algorithms. Further evaluation on independent datasets and systematic hyperparameter tuning could provide additional insight into their performance and generalization capabilities.
+Further evaluation on independent data and systematic hyperparameter tuning would provide more reliable insight into model generalization.
 
 ---
 
-**Notebook:** [Banknote_Authentication.ipynb](https://github.com/TrishaPal2003/Bank_Authentication/blob/main/Banknote_Authentication.ipynb)
+**Notebook:** [Banknote_Authentication.ipynb](Banknote_Authentication.ipynb)
