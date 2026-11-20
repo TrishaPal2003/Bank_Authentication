@@ -250,7 +250,6 @@ This project demonstrates a machine learning workflow for binary banknote classi
 
 On the 270-sample test set, KNN achieved 100% accuracy and SVM achieved 99.63%. The current 5-fold cross-validation experiment also produced high mean accuracy for both models. However, because the notebook currently performs cross-validation on the full deduplicated dataset rather than only the training split, the CV results should be rerun using training data only before presenting them as an independent validation estimate.
 
-Further evaluation on independent data and systematic hyperparameter tuning would provide more reliable insight into model generalization.
 
 ---
 
