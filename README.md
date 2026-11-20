@@ -253,4 +253,4 @@ On the 270-sample test set, KNN achieved 100% accuracy and SVM achieved 99.63%. 
 
 ---
 
-**Notebook:** [Banknote_Authentication.ipynb](Banknote_Authentication.ipynb)
+
