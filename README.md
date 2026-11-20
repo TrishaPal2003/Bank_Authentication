@@ -140,34 +140,6 @@ The scaler was included within Scikit-learn pipelines so that preprocessing and 
 
 Two supervised machine learning algorithms were implemented.
 
-### 5.1 K-Nearest Neighbors (KNN)
-
-K-Nearest Neighbors is a supervised learning algorithm that classifies a sample based on the classes of its nearest neighboring samples.
-
-**Configuration:**
-
-- Algorithm: K-Nearest Neighbors
-- Number of neighbors: `n_neighbors=5`
-- Feature scaling: StandardScaler
-- Implementation: Scikit-learn Pipeline
-
-Documentation: [KNeighborsClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
-
-### 5.2 Support Vector Machine (SVM)
-
-Support Vector Machine is a supervised learning algorithm that identifies a decision boundary to separate different classes.
-
-**Configuration:**
-
-- Algorithm: Support Vector Machine
-- Kernel: RBF (Radial Basis Function)
-- Parameters: Default Scikit-learn SVC parameters
-- Feature scaling: StandardScaler
-- Implementation: Scikit-learn Pipeline
-
-No systematic hyperparameter tuning was performed.
-
-Documentation: [SVC](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html)
 
 ## 6. Model Evaluation
 
@@ -287,17 +259,6 @@ The difference between the test accuracies represents only one sample. Therefore
 
 The results should be interpreted within the context of the selected dataset and evaluation procedure.
 
-## 9. Limitations
-
-This project has several limitations:
-
-1. **Dataset Size:** The experiment uses a relatively small dataset containing 1,372 original records.
-2. **Duplicate Records:** The original dataset contained 24 duplicate records, which were removed during preprocessing.
-3. **Limited Algorithms:** Only KNN and SVM were implemented and compared.
-4. **No Hyperparameter Tuning:** Systematic hyperparameter optimization was not performed. KNN used five neighbors, while SVM used the RBF kernel with default parameters.
-5. **Dataset Dependency:** The evaluation was performed using one dataset. The results may not generalize to banknote samples from other sources or collection environments.
-6. **Feature Dependency:** The models used four extracted statistical features rather than raw banknote images.
-7. **Cross-Validation Protocol:** The cross-validation results should be interpreted according to the data supplied to the cross-validation procedure. If the complete cleaned dataset was used, including the held-out test samples, the CV results are not an independent training-only validation estimate.
 
 ## 10. Conclusion
 
@@ -311,7 +272,7 @@ In the reported five-fold cross-validation experiment, KNN achieved a mean accur
 
 Overall, both algorithms demonstrated high classification performance on the selected dataset. Further experiments using training-only cross-validation, hyperparameter tuning, and additional independent datasets could provide a more comprehensive evaluation of their generalization ability.
 
-## 11. Installation and Requirements
+## 11. Requirements
 
 The project uses the following Python libraries:
 
@@ -321,20 +282,6 @@ The project uses the following Python libraries:
 - seaborn
 - scikit-learn
 - jupyter
-
-Install the required libraries using:
-
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn jupyter
-```
-
-## 12. How to Run the Project
-
-1. Clone or download this repository.
-2. Install the required Python libraries.
-3. Open the Jupyter Notebook.
-4. Make sure the dataset file is available at the path specified in the notebook.
-5. Run the notebook cells sequentially.
 
 **Project Notebook:** [Banknote_Authentication.ipynb](Banknote_Authentication.ipynb)
 
