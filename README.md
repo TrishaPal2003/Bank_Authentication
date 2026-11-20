@@ -283,7 +283,7 @@ The project uses the following Python libraries:
 - scikit-learn
 - jupyter
 
-**Project Notebook:** [Banknote_Authentication.ipynb]([Banknote_Authentication.ipynb](https://colab.research.google.com/drive/1XhC9fwQvvdz-DXcCsLoddyANmDYRrh2-?usp=sharing))
+**Project Notebook:** [Banknote_Authentication.ipynb](https://colab.research.google.com/drive/1XhC9fwQvvdz-DXcCsLoddyANmDYRrh2-?usp=sharing)
 
 
 ---
